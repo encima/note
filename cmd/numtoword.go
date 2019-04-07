@@ -2,6 +2,7 @@ package cmd
 
 // Credit to: https://siongui.github.io/2018/01/10/go-convert-number-to-word-from-1-to-1000/
 
+// NumberToWord contains the english word representing the number
 var NumberToWord = map[int]string{
 	1:  "one",
 	2:  "two",
@@ -47,18 +48,17 @@ func convert1to99(n int) (w string) {
 	return
 }
 
-func convert100to999(n int) (w string) {
+func convert100to999(n int) string {
 	q := n / 100
 	r := n % 100
-	w = NumberToWord[q] + " " + "hundred"
+	w := NumberToWord[q] + " " + "hundred"
 	if r == 0 {
-		return
-	} else {
-		w = w + " and " + convert1to99(r)
+		return w
 	}
-	return
+	return w + " and " + convert1to99(r)
 }
 
+// ConvertNumToWord converts a non-negative integer to its english equivalent
 func ConvertNumToWord(n int) (w string) {
 	if n > 1000 || n < 1 {
 		panic("func Convert1to1000: n > 1000 or n < 1")
