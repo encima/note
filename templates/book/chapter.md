@@ -1,9 +1,9 @@
 # Chapter {{.Number}} - {{.Name}}
 
-[i](./index.md) - {{range $i, $l := .Links}}{{.}}{{end}}
+[i](./index.md) - {{range $i, $l := .Links}}{{- if $i}} - {{end}}{{.}}{{end}}
 
 ## Introduction
 
 ## Summary
 
-{{range $i, $l := .Links}}{{- if $i}} - {{end}}{{.}}{{end}}
+[i](./index.md) - {{range $i, $l := .Links}}{{- if $i}} - {{end}}{{.}}{{end}}

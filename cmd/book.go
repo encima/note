@@ -23,6 +23,7 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"text/template"
 
@@ -63,22 +64,22 @@ var bookCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		book, err := promptForBook()
 		if err != nil {
-			log.Errorf("error prompting for book: %v, aborting", err)
+			log.Fatalf("error prompting for book: %v, aborting", err)
 		}
 
 		dir, err := buildDirStruct(book.Title)
 		if err != nil {
-			log.Errorf("error building directory structure: %v", err)
+			log.Fatalf("error building directory structure: %v", err)
 		}
 
 		err = createIndex(book, dir)
 		if err != nil {
-			log.Errorf("error creating index: %v", err)
+			log.Fatalf("error creating index: %v", err)
 		}
 
 		err = createChapters(book.Chapters, dir)
 		if err != nil {
-			log.Errorf("error creating chapters: %v", err)
+			log.Fatalf("error creating chapters: %v", err)
 		}
 	},
 }

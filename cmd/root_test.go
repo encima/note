@@ -40,7 +40,7 @@ func TestRootCommand(t *testing.T) {
 func TestCreateDirectories(t *testing.T) {
 	const testDir = "test-dir"
 
-	if err := createDirectories(testDir); err != nil {
+	if err := createDirs([]string{testDir}); err != nil {
 		t.Fatalf("unexpected error creating directories: %v", err)
 	}
 
