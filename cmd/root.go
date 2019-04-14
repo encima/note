@@ -29,7 +29,9 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
+	"os/user"
 
 	"github.com/spf13/cobra"
 )
@@ -56,5 +58,25 @@ func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
+	}
+}
+
+// Settings represents application settings supplied by the user
+type Settings struct {
+	Home    string
+	BlogDir string `json:"blogdir"`
+}
+
+var settings *Settings
+
+func loadSettings() {
+	usr, err := user.Current()
+
+	if err != nil {
+		log.Fatal("Unable to acquire user")
+	}
+
+	settings = &Settings{
+		Home: usr.HomeDir,
 	}
 }

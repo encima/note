@@ -27,6 +27,7 @@ import (
 	"text/template"
 
 	"github.com/gobuffalo/packr"
+	"github.com/labstack/gommon/log"
 	"github.com/spf13/cobra"
 )
 
@@ -62,22 +63,22 @@ var bookCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		book, err := promptForBook()
 		if err != nil {
-			fmt.Errorf("error prompting for book: %v, aborting", err)
+			log.Errorf("error prompting for book: %v, aborting", err)
 		}
 
 		dir, err := buildDirStruct(book.Title)
 		if err != nil {
-			fmt.Errorf("error building directory structure: %v", err)
+			log.Errorf("error building directory structure: %v", err)
 		}
 
 		err = createIndex(book, dir)
 		if err != nil {
-			fmt.Errorf("error creating index: %v", err)
+			log.Errorf("error creating index: %v", err)
 		}
 
 		err = createChapters(book.Chapters, dir)
 		if err != nil {
-			fmt.Errorf("error creating chapters: %v", err)
+			log.Errorf("error creating chapters: %v", err)
 		}
 	},
 }
