@@ -28,7 +28,6 @@ import (
 	"text/template"
 
 	"github.com/gobuffalo/packr"
-	"github.com/labstack/gommon/log"
 	"github.com/spf13/cobra"
 )
 
