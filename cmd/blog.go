@@ -29,11 +29,13 @@ import (
 	"time"
 
 	"github.com/gobuffalo/packr"
+	"github.com/google/uuid"
 	"github.com/spf13/cobra"
 )
 
 // BlogEntry represents a single post to the blog
 type BlogEntry struct {
+	ID       string
 	Date     time.Time
 	Author   string
 	Title    string
@@ -51,12 +53,15 @@ var blogCmd = &cobra.Command{
 	Short: "Creates the shell for a blog entry and opens vscode",
 	Long:  `This command simply creates the .md file for a blog`,
 	Run: func(cmd *cobra.Command, args []string) {
+		uid, _ := uuid.NewRandom()
+
 		blog := &BlogEntry{
 			Date:     time.Now().UTC(),
 			Author:   "Sean K Smith",
 			Title:    prompt("title: "),
 			Subtitle: prompt("subtitle: "),
 			Tags:     repeatPrompt("tag: "),
+			ID:       uid.String(),
 		}
 
 		blogpath := os.Getenv("BLOGPATH")
@@ -71,8 +76,8 @@ var blogCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
-
 		defer file.Close()
+
 		w := bufio.NewWriter(file)
 		defer w.Flush()
 
