@@ -46,10 +46,10 @@ var rootCmd = &cobra.Command{
 	Use:   "note",
 	Short: "Creates a basic markdown template for notes",
 	Long: `
-	Creates a series of linked markdown files in a simple
-	template useful for detailed note taking. Store the project
-	in a git repository for easy access and tracking fo your
-	notes.`,
+Creates a series of linked markdown files in a simple
+template useful for detailed note taking. Store the project
+in a git repository for easy access and tracking fo your
+notes.`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
