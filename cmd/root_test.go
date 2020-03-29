@@ -7,18 +7,30 @@ import (
 )
 
 func TestFormatDirName(t *testing.T) {
-	const exp = "some--directory--namedir-name"
-	const inp = `  Some  Directory -Name
+	var tests = []struct {
+		input string
+		want  string
+	}{
+		{"A simple chapter", "a-simple-chapter"},
+		{"A chapter with \"quotes\"", "a-chapter-with-quotes"},
+		{"A chapt-er with-hyphens", "a-chapt-er-with-hyphens"},
+		{"A chapter   with too     many spaces", "a-chapter-with-too-many-spaces"},
+		{"This extraordinary chapter has so many characters that it exceeds the 128 character limit. Full file lengths are typically limited to 255, but that includes files I believe.", "this-extraordinary-chapter-has-so-many-characters-that-it-exceeds-the-128-character-limit-full-file-lengths-are-typically-limite"},
+		{"This chapter: has some `strange characters` -- which \"should be removed\"", "this-chapter-has-some-strange-characters----which-should-be-removed"},
+		{`  Some  Directory -Name
 
-	dir-name`
-
-	d, err := formatDirName(inp)
-
-	if err != nil {
-		t.Errorf("unexpected error: %v", err)
+		dir-name`, "some-directory--namedir-name"},
 	}
-	if d != exp {
-		t.Errorf(`formatDirName("%s") returned "%s", want %s`, inp, d, exp)
+
+	for _, test := range tests {
+		got, err := formatDirName(test.input)
+		if err != nil {
+			t.Errorf("formatDirName(%s) returned err %v", test.input, err)
+			continue
+		}
+		if got != test.want {
+			t.Errorf("formatDirName(%s) = %s wanted %s", test.input, got, test.want)
+		}
 	}
 }
 

@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -32,9 +33,18 @@ func formatDirName(dir string) (string, error) {
 	if len(dir) == 0 {
 		return "", fmt.Errorf("Invalid directory %s", dir)
 	}
-	val := dir
-	val = strings.TrimSpace(val)
-	val = strings.ToLower(val)
-	val = strings.NewReplacer("\n", "", "\r", "", "\t", "", "'", "", " ", "-").Replace(val)
-	return val, nil
+	dir = strings.Trim(dir, " ")
+
+	re := regexp.MustCompile(`[^a-zA-Z0-9- ]`)
+	dir = re.ReplaceAllString(dir, "")
+
+	re = regexp.MustCompile(`[ ]+`)
+	dir = re.ReplaceAllString(dir, "-")
+
+	if len(dir) > 128 {
+		dir = dir[:128]
+	}
+
+	dir = strings.ToLower(dir)
+	return dir, nil
 }
