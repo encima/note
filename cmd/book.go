@@ -33,7 +33,7 @@ import (
 
 // Chapter represents a chapter in a book
 type Chapter struct {
-	Number int
+	Number string
 	Name   string
 	File   string
 	Link   string
@@ -105,9 +105,10 @@ func promptForBook() (*Book, error) {
 		if err != nil {
 			return nil, err
 		}
-		chFile = chFile + ".md"
+		chNum := fmt.Sprintf("%03d", i+1)
+		chFile = chNum + "-" + chFile + ".md"
 		chLink := "./" + chFile
-		book.Chapters = append(book.Chapters, &Chapter{i + 1, chName, chFile, chLink, nil})
+		book.Chapters = append(book.Chapters, &Chapter{chNum, chName, chFile, chLink, nil})
 		links = append(links, fmt.Sprintf("[%d](%s)", i+1, chLink))
 	}
 

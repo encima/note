@@ -41,14 +41,6 @@ func TestFormatDirNameInvalid(t *testing.T) {
 	}
 }
 
-func TestRootCommand(t *testing.T) {
-	// rootCmd.Flags().AddFlag(&pflag.Flag{Name: "title", Value: "A Long St"})
-
-	if err := rootCmd.Execute(); err != nil {
-		t.Errorf("unexpected error: %v", err)
-	}
-}
-
 func TestCreateDirectories(t *testing.T) {
 	const testDir = "test-dir"
 
@@ -77,5 +69,4 @@ func TestCreateDirectories(t *testing.T) {
 	}
 
 	w.Flush()
-
 }
