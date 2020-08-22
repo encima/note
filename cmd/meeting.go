@@ -55,7 +55,7 @@ var meetCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("error prompting for meeting: %v, aborting", err)
 		}
-		createMeeting(meet, "%HOME/dev/me/extendedchris/_aiven/")
+		createMeeting(meet, "$HOME/dev/me/extendedchris/_aiven/")
 
 
 	},

@@ -35,13 +35,12 @@ import (
 
 // Book represents the book getting created
 type Task struct {
-	Name, Desc, Status, For, From   string
+	Name, Desc, Status, For, From, Area   string
 	Created, Due time.Time
 	Links []string
 }
 
-const taskTmplFile = "./task/general.md"
-const taskFile = "./%s/index.md"
+const taskTmplFile = "./task/task.md"
 
 var taskTmpl *template.Template
 
@@ -64,7 +63,7 @@ var taskCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(taskCmd)
 	box := packr.NewBox("../templates")
-	indexTmpl = template.Must(template.New("general.md").Parse(box.String(indexTmplFile)))
+	indexTmpl = template.Must(template.New("general.md").Parse(box.String(taskTmplFile)))
 }
 
 func promptForTask() (*Task, error) {
@@ -74,6 +73,7 @@ func promptForTask() (*Task, error) {
 		For:  prompt("for: "),
 		From: prompt("from: "),
 		Created: time.Now(),
+		Area: prompt("area: "),
 		Links:   repeatPrompt("links: "),
 	}
 
@@ -81,7 +81,7 @@ func promptForTask() (*Task, error) {
 }
 
 func createTask(task *Task, dir string) error {
-	idxf, err := os.Create(fmt.Sprintf("%s/%s.md", dir, task.Name))
+	idxf, err := os.Create(os.ExpandEnv(fmt.Sprintf("%s/%s/%s.md", dir, task.Area, task.Name)))
 	if err != nil {
 		return err
 	}
