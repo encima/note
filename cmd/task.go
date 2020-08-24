@@ -54,7 +54,7 @@ var taskCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("error prompting for task: %v, aborting", err)
 		}
-		createTask(task, fmt.Sprintf("$HOME/dev/me/tasks/%s/%s/", task.Area, task.Status))
+		createTask(task, fmt.Sprintf("$HOME/Dropbox/me/tasks/%s/%s/", task.Area, task.Status))
 
 
 	},

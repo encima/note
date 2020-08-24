@@ -55,7 +55,7 @@ var meetCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("error prompting for meeting: %v, aborting", err)
 		}
-		createMeeting(meet, "$HOME/dev/me/extendedchris/_aiven/")
+		createMeeting(meet, "$HOME/Dropbox/me/notes/aiven/meetings/")
 
 
 	},
@@ -80,7 +80,7 @@ func promptForMeet() (*Meeting, error) {
 }
 
 func createMeeting(meeting *Meeting, dir string) error {
-	idxf, err := os.Create(os.ExpandEnv(fmt.Sprintf("%s/%s-%s-%s.md", dir, meeting.On, meeting.With, meeting.Purpose)))
+	idxf, err := os.Create(os.ExpandEnv(fmt.Sprintf("%s/%s-%s.md", dir, meeting.On, meeting.With)))
 	if err != nil {
 		return err
 	}
