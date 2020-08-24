@@ -54,7 +54,7 @@ var taskCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("error prompting for task: %v, aborting", err)
 		}
-		createTask(task, "$HOME/dev/me/tasks/")
+		createTask(task, fmt.Sprintf("$HOME/dev/me/tasks/%s/%s/", task.Area, task.Status))
 
 
 	},
@@ -63,7 +63,7 @@ var taskCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(taskCmd)
 	box := packr.NewBox("../templates")
-	indexTmpl = template.Must(template.New("general.md").Parse(box.String(taskTmplFile)))
+	indexTmpl = template.Must(template.New("task.md").Parse(box.String(taskTmplFile)))
 }
 
 func promptForTask() (*Task, error) {
@@ -81,7 +81,7 @@ func promptForTask() (*Task, error) {
 }
 
 func createTask(task *Task, dir string) error {
-	idxf, err := os.Create(os.ExpandEnv(fmt.Sprintf("%s/%s/%s.md", dir, task.Area, task.Name)))
+	idxf, err := os.Create(os.ExpandEnv(fmt.Sprintf("%s/%s.md", dir, task.Name)))
 	if err != nil {
 		return err
 	}
